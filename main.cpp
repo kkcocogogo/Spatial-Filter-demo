@@ -17,8 +17,7 @@ using namespace std;
 static void help(const char* progName)
 {
     cout << endl
-    <<  "This program demonstrated the use of the discrete Fourier transform (DFT). " << endl
-    <<  "The dft of an image is taken and it's power spectrum is displayed."          << endl
+    <<  "This program demonstrates spatial filter in OpenCV and basic spatial filter design. " << endl
     <<  "Usage:"                                                                      << endl
     << progName << " [image_name -- default lena.jpg] "                       << endl << endl;
 }
@@ -31,26 +30,32 @@ int main(int argc, const char * argv[])
     Mat source_image = (argc>=2) ? imread(argv[1]) : imread("/Users/timfeirg/Google Drive/OpenCV/DIP3E_Original_Images_CH02/Fig0222(a)(face).tif", CV_LOAD_IMAGE_GRAYSCALE),
     target_image;
     
-    // initialize the spatial filter!
+    // initialize the box filter for demo purpose
     float box_array[3][3] = {
         {(float)1/9,(float)1/9,(float)1/9},
         {(float)1/9,(float)1/9,(float)1/9},
         {(float)1/9,(float)1/9,(float)1/9}
     };
-    
+    // the laplacian filter is designed based on the coefficients I found on internet
     float laplacian_array[3][3] = {
         {-1,-1,-1},
         {-1,8,-1},
         {-1,-1,-1}
     };
+    
+    // creating filter as Mat objects based on the array just designed
     Mat box_filter = Mat( 3, 3, CV_32F, box_array ),
     laplacian_filter = Mat( 3, 3, CV_32F, laplacian_array);
     
     filter2D( source_image, target_image, -1, box_filter );
-    
     imshow("box filter", target_image);
+    
     filter2D( source_image, target_image, -1, laplacian_filter);
     imshow("Laplacian filter", target_image);
+    // high-boost filtering from what I know is original image + Laplacian filtered image
+    float highboost_coefficient = 1;
+    target_image += highboost_coefficient * source_image;
+    imshow("high-boost filter", target_image);
     waitKey();
     
     return 0;
