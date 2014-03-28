@@ -33,15 +33,15 @@ OpenCV中虽然允许直接创建自定义的灰度网格图像作为空域滤�
 
 ## 结果
 
-*   模糊-box filter
+### 模糊-box filter
 
 ![box filter result](boxFilterResult.png)
-*   模糊-weighted average filter
+### 模糊-weighted average filter
 
 ![weighted average filter result](weightedAverageResult.png)
-*   拉普拉斯滤波器
+### 拉普拉斯滤波器
 
 ![laplacian result](laplacianResult.png)
-*   high-boost filter进行锐化
+### high-boost filter进行锐化
 
 ![high-boost filter result](highBoostResult.png)
