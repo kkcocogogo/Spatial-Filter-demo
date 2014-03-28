@@ -1,0 +1,43 @@
+这是中山大学生物医学工程系图像处理课程的一份实验指导。
+
+## 程序说明
+
+这份程序演示了利用box、weighed average以及laplacian滤波器对图像进行空间滤波（模糊），以及应用课本介绍的high-boost滤波器进行锐化。
+
+因为仅是出于展示目的，所以代码只是为了展示空间滤波的逻辑，不是一个认真的程序。
+
+### 搭建编译环境
+
+~~~c++
+#include <iostream>
+#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+~~~
+
+在IDE中还需要加入相应的动态链接库，比如程序中包含了`imgproc.hpp`头文件，并且调用了`imgproc.hpp`中定义的函数，就需要将`imgproc.dll`包含进项目中。
+
+### 创建空间滤波器-[kernel](http://docs.opencv.org/doc/tutorials/imgproc/imgtrans/filter_2d/filter_2d.html)
+
+OpenCV中kernel的概念已经在上边的链接中给出，请详读。
+
+OpenCV中虽然允许直接创建自定义的灰度网格图像作为空域滤波器，比如`Mat::create()`函数，但是一个一个像素地赋值显得麻烦，所以这里先将所有用到的滤波器以二维数组的形式定义，再用OpenCV中的Mat constructor调用这些二维数组，直接生成本程序中用到的3x3图像，每一个像素的灰度值由数组中相应位置的元素描述。
+
+### 滤波
+
+有了制作好的滤波器，就可以直接使用OpenCV下的`filter2D()`函数对原图进行处理，请见代码。
+
+### 锐化
+
+特别地，程序最后演示high-boost filter，就是用拉普拉斯滤波器对图像进行锐化的时候，其原理可以参考[这里](http://fourier.eng.hmc.edu/e161/lectures/gradient/node2.html)
+
+## 结果
+
+*   模糊-box filter
+![box filter result](boxFilterResult.png)
+*   模糊-weighted average filter
+![weighted average filter result](weightedAverageResult.png)
+*   拉普拉斯滤波器
+![laplacian result](laplacianResult.png)
+*   high-boost filter进行锐化
+![high-boost filter result](highBoostResult.png)

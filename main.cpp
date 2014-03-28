@@ -48,7 +48,7 @@ int main(int argc, const char * argv[])
         {-1,8,-1},
         {-1,-1,-1}
     };
-
+    
     
     // creating filter as Mat objects based on the array just designed
     Mat box_filter = Mat( 3, 3, CV_32F, box_array ),
